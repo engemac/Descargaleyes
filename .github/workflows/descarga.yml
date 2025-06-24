@@ -1,0 +1,27 @@
+name: Descargar y procesar leyes
+
+on:
+  workflow_dispatch:
+
+jobs:
+  procesar:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        ley: [
+          CPEUM, CCF, CCOM, CJM, COFIPE, CFPC, CFPP, CMPP, CNPP, CPF,
+          LOAPF, LOCGEUM, LOPJF, LOEFAEM, LOAM, LOTJA, LOPGR, LOPDC,
+          LOBM, LONAFIN, LOFNDARFP, LOBANSEFI, LOBANJFA, LOBANCOMEXT,
+          LOBANOBRAS, LOLNAP, LOIPN, LOUAM, LOUAA, LOUNAM,
+          LOTA, LOCFCyRL, LOCNCyT, LOS, LRA5PROF, LRA6DR, LRF73XVIII,
+          LA, LAGR, LAAM, LAREFAM, LAS, LAPP, LARCP, LAC,
+          LAAT, LBOGM, LCEC, LCPAF, LCJPJF, LCT, LCE, LCM, LCF, LDRS,
+          LH, LIE, LIC, LIF2025, LISR, LIVA, LFPC, LFPDPPP, LFJS, LSM,
+          LFTR, LFSP, LFTSE
+        ]
+    steps:
+      - uses: actions/checkout@v3
+      - name: Instalar dependencias
+        run: pip install -r requirements.txt
+      - name: Ejecutar procesamiento por ley
+        run: python scripts/main.py "${{ matrix.ley }}"
