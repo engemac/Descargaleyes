@@ -1,0 +1,23 @@
+name: Fusionar outputs
+
+on:
+  workflow_dispatch:
+
+jobs:
+  fusionar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Instalar dependencias
+        run: pip install -r requirements.txt
+      - name: Fusionar outputs y generar BD
+        run: |
+          python scripts/fusiona_outputs.py
+          python scripts/json_a_bd.py
+      - name: Guardar artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: leyes_mexicanas_output
+          path: |
+            output_global
+            BD
